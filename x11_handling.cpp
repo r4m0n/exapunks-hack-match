@@ -368,12 +368,12 @@ std::optional<PhageAndBoard> loadPhageAndBoardFromWindow(Display *display, Windo
 }
 
 void moveLeft(Display* display) {
-    KeyCode keyCodeS = XKeysymToKeycode(display, XK_s);
+    KeyCode keyCodeS = XKeysymToKeycode(display, XK_a);
     sendKey(display, keyCodeS);
 }
 
 void moveRight(Display* display) {
-    KeyCode keyCodeF = XKeysymToKeycode(display, XK_f);
+    KeyCode keyCodeF = XKeysymToKeycode(display, XK_d);
     sendKey(display, keyCodeF);
 }
 void swap(Display* display) {
