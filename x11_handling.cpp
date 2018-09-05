@@ -120,13 +120,21 @@ std::optional<Window> getExapunksWindowImpl(Display *display, Window curWindow) 
     return {};
 }
 
-void sendKey(Display* display, KeyCode keyCode) {
+void sendKeyDown(Display* display, KeyCode keyCode) {
     XTestFakeKeyEvent(display, keyCode, True, 0);
     XSync(display, False);
     std::this_thread::sleep_for(KEY_DELAY);
+}
+
+void sendKeyUp(Display* display, KeyCode keyCode) {
     XTestFakeKeyEvent(display, keyCode, False, 0);
     XSync(display, False);
     std::this_thread::sleep_for(KEY_DELAY);
+}
+
+void sendKey(Display* display, KeyCode keyCode) {
+    sendKeyDown(display, keyCode);
+    sendKeyUp(display, keyCode);
 }
 
 XImage* screenShotGame(Display* display, Window window) {
@@ -386,8 +394,13 @@ void tractorBeam(Display *display) {
     sendKey(display, keyCodeJ);
 }
 
-void idle(Display *display) {
+void idleStart(Display *display) {
     KeyCode keyCodeL = XKeysymToKeycode(display, XK_l);
-    sendKey(display, keyCodeL);
+    sendKeyDown(display, keyCodeL);
+}
+
+void idleEnd(Display *display) {
+    KeyCode keyCodeL = XKeysymToKeycode(display, XK_l);
+    sendKeyUp(display, keyCodeL);
 }
 }}

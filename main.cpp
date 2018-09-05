@@ -29,6 +29,7 @@ int main(int, char**) {
     X11Handling::activateWindow(display, window);
     std::vector<Solver::Move> moves;
     moves.reserve(100);
+    bool idle = false;
     while (true) {
         std::optional<X11Handling::PhageAndBoard> phageAndBoard = X11Handling::loadPhageAndBoardFromWindow(display, window);
         if (!phageAndBoard) {
@@ -39,6 +40,10 @@ int main(int, char**) {
         Solver::printMoves(moves);
         uint8_t phageCol = phageAndBoard->phageCol;
         for (const auto& move : moves) {
+            if (idle && move.command != Solver::IDLE) {
+                X11Handling::idleEnd(display);
+                idle = false;
+            }
             while (move.col > phageCol) {
                 X11Handling::moveRight(display);
                 ++phageCol;
@@ -58,7 +63,8 @@ int main(int, char**) {
                 X11Handling::swap(display);
                 break;
             case Solver::IDLE:
-                X11Handling::idle(display);
+                X11Handling::idleStart(display);
+                idle = true;
                 break;
             default:
                 std::cerr << "bad command in solution: " << static_cast<int>(move.command) << '\n';
