@@ -161,6 +161,25 @@ void makeMove(Board::Board& board, Move move) {
 void solve(const Board::Board& board, std::vector<Move>& moves) {
     Timer timer{"solve time"};
     moves.clear();
+    int boardMin = 999;
+    int boardMax = 0;
+
+    for (uint8_t i=0; i<Board::MAX_COLS; ++i) {
+        if (board.counts[i] > boardMax) {
+            boardMax = board.counts[i];
+        }
+        if (board.counts[i] < boardMin) {
+            boardMin = board.counts[i];
+        }
+    }
+    
+    if (boardMax >= 6 && boardMax - boardMin > 1) {
+        balanceBoard(board, moves);
+        if (moves.size()) {
+            return;
+        }
+    }
+
     const int maxMaxMoves = itemCount(board) < 12 ? 7 : 10;
     for (int maxMoves=1; maxMoves<maxMaxMoves; ++maxMoves) {
         CacheType cache;
