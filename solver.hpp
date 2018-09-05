@@ -12,6 +12,7 @@ namespace Solver {
 const uint8_t TAKE = 0;
 const uint8_t PUT = 1;
 const uint8_t SWAP = 2;
+const uint8_t IDLE = 3;
 
 struct Move {
     uint8_t command;

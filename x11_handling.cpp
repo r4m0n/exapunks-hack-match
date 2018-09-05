@@ -385,4 +385,9 @@ void tractorBeam(Display *display) {
     KeyCode keyCodeJ = XKeysymToKeycode(display, XK_j);
     sendKey(display, keyCodeJ);
 }
+
+void idle(Display *display) {
+    KeyCode keyCodeL = XKeysymToKeycode(display, XK_l);
+    sendKey(display, keyCodeL);
+}
 }}

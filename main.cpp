@@ -57,6 +57,9 @@ int main(int, char**) {
             case Solver::SWAP:
                 X11Handling::swap(display);
                 break;
+            case Solver::IDLE:
+                X11Handling::idle(display);
+                break;
             default:
                 std::cerr << "bad command in solution: " << static_cast<int>(move.command) << '\n';
                 throw std::runtime_error("bad command in solution");

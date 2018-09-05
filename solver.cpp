@@ -119,6 +119,9 @@ void printMoves(const std::vector<Move>& moves) {
         case SWAP:
             std::cout << 's';
             break;
+        case IDLE:
+            std::cout << 'i';
+            break;
         default:
             std::cerr << "bad command: " << static_cast<int>(move.command) << '\n';
             throw std::runtime_error("bad command");
@@ -148,6 +151,8 @@ void makeMove(Board::Board& board, Move move) {
         assert(board.counts[col] > 1);
         std::swap(board.items[col][board.counts[col]-1], board.items[col][board.counts[col]-2]);
         return;
+    case IDLE:
+        return;
     }
     std::cerr << "makeMove unhandled command: " << static_cast<int>(move.command) << '\n';
     throw std::runtime_error("makeMove");
@@ -171,5 +176,6 @@ void solve(const Board::Board& board, std::vector<Move>& moves) {
             return;
         }
     }
+    moves.push_back({IDLE, 3});
 }
 }}

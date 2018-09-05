@@ -22,5 +22,6 @@ void moveLeft(Display* display);
 void moveRight(Display* display);
 void swap(Display* display);
 void tractorBeam(Display *display);
+void idle(Display *display);
 }}
 #endif
